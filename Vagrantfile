@@ -24,6 +24,8 @@ Vagrant.configure("2") do |config|
       wget http://download.virtualbox.org/virtualbox/5.2.22/VBoxGuestAdditions_5.2.22.iso
       mount -o loop VBoxGuestAdditions_5.2.22.iso /mnt
       sh /mnt/VBoxLinuxAdditions.run
+      umount /mnt
+      rm -rf VBoxGuestAdditions_5.2.22.iso
       yum remove -y kernel-devel dkms
       yum groupremove -y "Development Tools"
     SHELL
