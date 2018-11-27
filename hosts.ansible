@@ -1,0 +1,2 @@
+[centreon-web]
+centreon-server ansible_port=2222 ansible_host=127.0.0.1
