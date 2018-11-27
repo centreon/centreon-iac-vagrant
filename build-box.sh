@@ -6,6 +6,8 @@ git clone --single-branch -b new_wrapper https://github.com/centreon/centreon-an
 echo "Start installation of Centreon using Ansible ..."
 cd centreon-ansible
 ansible-playbook -i ../hosts.ansible ../deploy.yml
+echo "Cleanup image ..."
+vagrant ssh -c "sudo yum clean -y all && sudo rm -rf /var/cache/yum"
 echo "Export image to Box format"
 cd ..
 vagrant package --output centreon.box
