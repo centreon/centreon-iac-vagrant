@@ -8,7 +8,7 @@ You can use two methods to use the Centreon Box:
 
 **Method 1**:
 
-Create a file with name `Vagrantfile` with these content:
+Create a file with name `Vagrantfile` with this content:
 ```
 # -*- mode: ruby -*-
 
@@ -20,12 +20,12 @@ end
 
 **Method 2**:
 
-Use these commands to create a default `Vagrantfile`:
+Use this command to create a default `Vagrantfile`:
 ```
 vagrant init lgcosta/centreon
 ```
 
-To initialize the box with command:
+To initialize the box, use this command:
 ```
 vagrant up
 ```
@@ -43,9 +43,9 @@ You need mapped a port to access the webgui, for this, add these line in `Vagran
 ```
 config.vm.network "forwarded_port", guest: 80, host: 8080
 ```
-reload config using commando `vagrant reload` and access in your browser the address: http://localhost:8080
+reload config using command `vagrant reload` and access in your browser the address: http://localhost:8080
 
-If you want to add your key in the box, add the following lines in the file `Vagrantfile`:
+If you want to add your ssh key in the box, add the following lines in the file `Vagrantfile`:
 ```
 config.vm.provision "shell" do |s|
     ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
@@ -65,7 +65,7 @@ What will you need
 - Ansible
 - Git access to repository [centreon-ansible](https://github.com/centreon/centreon-ansible)
 
-Pull these repository:
+Pull this repository:
 ```
 git pull https://github.com/centreon-lab/vagrant-centreon
 cd vagrant-centreon
@@ -78,7 +78,7 @@ sh build-box.sh
 
 A new file was created: `centreon.box`
 
-To use with vagrant, add you box with command:
+To use with Vagrant, add you box with command:
 ```
 vagrant box add centreon.box
 ```
