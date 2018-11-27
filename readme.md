@@ -6,7 +6,7 @@ Usage
 
 You can use two methods to use the Centreon Box:
 
-Method 1:
+**Method 1**:
 
 Create a file with name `Vagrantfile` with these content:
 ```
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Method 2:
+**Method 2**:
 
 Use these commands to create a default `Vagrantfile`:
 ```
