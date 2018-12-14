@@ -68,7 +68,7 @@ What will you need
 Pull this repository:
 ```
 git pull https://github.com/centreon/centreon-iac-vagrant
-cd vagrant-centreon
+cd centreon-iac-vagrant
 ```
 
 For build, you will only need to run the box building automation script:
