@@ -67,7 +67,7 @@ What will you need
 
 Pull this repository:
 ```
-git pull https://github.com/centreon-lab/vagrant-centreon
+git pull https://github.com/centreon/centreon-iac-vagrant
 cd vagrant-centreon
 ```
 
