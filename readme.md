@@ -124,3 +124,5 @@ vagrant init centreon
 ## Screencast
 
 Building own box:
+
+[![asciicast](https://asciinema.org/a/223018.svg)](https://asciinema.org/a/223018)
