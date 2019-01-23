@@ -1,10 +1,37 @@
 # Vagrant Cloud Centreon
 
+Table of Contents
+
+- [Overview](#overview)
+- [Requirements](#requirements)
+- [Usage](#usage)
+  - [Method 1](#method-1)
+  - [Method 2](#method-2)
+- [Additional information](#additional-information)
+- [Building your own Box](#building-your-own-box)
+  - [What will you need](#what-will-you-need)
+- [Screencasts](#screencasts)
+- [License](LICENSE)
+
+## Overview
+
+The Vagrant gives us an opportunity to develop and test the applications before we can put them in production and to meet this demand, here we have a setbox with an image ready and instructions to create your own box with the **Centreon**.
+
+The idea is that you can experience a monitoring environment with **Centreon** and develop your ideas with this tool. Implementing this Vagrant with Centreon will give you a complete database environment and daemons ready for monitoring.
+
+![centreon-screenshot](https://www.diigo.com/file/image/paesrbpzescbabrpdzdqcrqeps/vagrant-screen.jpg)
+
+## Requirements
+
+You will need the Vagrant tool to implement the **Centreon** box, we recommend that you use the latest version available on the project website, [see here the available distributions](https://www.vagrantup.com/downloads.html)
+
+Currently the *Centreon* box is available for VirtualBox virtualization provider, you can use the version available in the repository of your Linux distribution or use a version available for [Windows or Mac](https://www.virtualbox.org/wiki/Downloads)
+
 ## Usage
 
 You can use two methods to use the Centreon Box:
 
-**Method 1**:
+### Method 1
 
 Create a file with name `Vagrantfile` with this content:
 
@@ -17,7 +44,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-**Method 2**:
+### Method 2
 
 Use this command to create a default `Vagrantfile`:
 
@@ -64,7 +91,7 @@ end
 ### What will you need
 
 - Vagrant
-- Ansible
+- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - Git access to repository [centreon-ansible](https://github.com/centreon/centreon-ansible)
 
 Pull this repository:
@@ -93,3 +120,7 @@ Done ! Now you can use the box with Vagrant, example:
 ```bash
 vagrant init centreon
 ```
+
+## Screencast
+
+Building own box:
