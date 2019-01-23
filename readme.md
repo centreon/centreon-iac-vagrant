@@ -121,7 +121,11 @@ Done ! Now you can use the box with Vagrant, example:
 vagrant init centreon
 ```
 
-## Screencast
+## Screencasts
+
+Usage:
+
+[![Centreon Vagrant Box](http://img.youtube.com/vi/73uXqcr4DX0/0.jpg)](http://www.youtube.com/watch?v=73uXqcr4DX0)
 
 Building own box:
 
