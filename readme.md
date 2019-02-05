@@ -10,6 +10,7 @@ Table of Contents
 - [Additional information](#additional-information)
 - [Building your own Box](#building-your-own-box)
   - [What will you need](#what-will-you-need)
+  - [Using your Box](#using-your-box)
 - [Screencasts](#screencasts)
 - [License](LICENSE)
 
@@ -109,16 +110,30 @@ sh build-box.sh
 
 A new file was created: `centreon.box`
 
+### Using your Box
+
 To use with Vagrant, add you box with command:
 
 ```bash
-vagrant box add centreon.box
+vagrant box add my-centreon centreon.box
+```
+
+Example:
+
+```bash
+$ vagrant box add my-centreon /home/lgcosta/devel/centreon/vagrant/centreon/centreon.box
+==> box: Box file was not detected as metadata. Adding it directly...
+==> box: Adding box 'my-centreon' (v0) for provider:
+    box: Unpacking necessary files from: file:///home/lgcosta/devel/centreon/vagrant/centreon/centreon.box
+==> box: Successfully added box 'my-centreon' (v0) for 'virtualbox'!
+$ vagrant box list
+my-centreon      (virtualbox, 0)
 ```
 
 Done ! Now you can use the box with Vagrant, example:
 
 ```bash
-vagrant init centreon
+vagrant init my-centreon
 ```
 
 ## Screencasts
