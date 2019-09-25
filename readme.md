@@ -1,84 +1,78 @@
-# Vagrant Cloud Centreon
+# Centreon Vagrant
 
-Table of Contents
+This Vagrant configuration set will provide you with a ready-made environment for you to try Centreon version 19.10.
+The scripts contained here will install Centreon on an available CentOS 7 image and will prepare it all to preconfigure Centreon,
+making it ready for use with the access settings.
 
-- [Overview](#overview)
-- [Requirements](#requirements)
-- [Usage](#usage)
-  - [Method 1](#method-1)
-  - [Method 2](#method-2)
-- [Additional information](#additional-information)
-- [Building your own Box](#building-your-own-box)
-  - [What will you need](#what-will-you-need)
-  - [Using your Box](#using-your-box)
-- [Screencasts](#screencasts)
-- [License](LICENSE)
+Just get on (`vagrant up`) and use it in the web interface.
 
-## Overview
+[![asciicast](https://asciinema.org/a/264694.svg)](https://asciinema.org/a/264694)
 
-The Vagrant gives us an opportunity to develop and test the applications before we can put them in production and to meet this demand, here we have a setbox with an image ready and instructions to create your own box with the **Centreon**.
+### What will you need
 
-The idea is that you can experience a monitoring environment with **Centreon** and develop your ideas with this tool. Implementing this Vagrant with Centreon will give you a complete database environment and daemons ready for monitoring.
+- Vagrant
+- VirtualBox or KVM/Qemu/Libvirt
 
-![centreon-screenshot](https://www.diigo.com/file/image/paesrbpzescbabrpdzdqcrqeps/vagrant-screen.jpg)
+#### Vagrant
 
-## Requirements
+  https://www.vagrantup.com/intro/index.html
 
-You will need the Vagrant tool to implement the **Centreon** box, we recommend that you use the latest version available on the project website, [see here the available distributions](https://www.vagrantup.com/downloads.html)
+#### Virtualbox
 
-Currently the *Centreon* box is available for VirtualBox virtualization provider, you can use the version available in the repository of your Linux distribution or use a version available for [Windows or Mac](https://www.virtualbox.org/wiki/Downloads)
+  https://www.virtualbox.org/
 
-## Usage
+#### KVM/Qemu - Libvirt
 
-You can use two methods to use the Centreon Box:
+  - https://www.qemu.org/
+  - https://help.ubuntu.com/community/Installation/QemuEmulator
+  - https://github.com/vagrant-libvirt/vagrant-libvirt
 
-### Method 1
+### Usage
 
-Create a file with name `Vagrantfile` with this content:
-
-```ruby
-# -*- mode: ruby -*-
-
-Vagrant.configure("2") do |config|
-  config.vm.box = "lgcosta/centreon"
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-end
+Pull this repository:
+```
+git pull https://github.com/centreon-lab/vagrant
+cd vagrant
 ```
 
-### Method 2
-
-Use this command to create a default `Vagrantfile`:
-
-```bash
-vagrant init lgcosta/centreon
+For up the image, you will only need to run the box building automation script:
 ```
-
-To initialize the box, use this command:
-
-```bash
 vagrant up
 ```
 
-## Additional information
+If you want to use KVM/Qemu:
+```
+vagrant up --provider=libvirt
+```
+
+To access the environment:
+
+ssh:
+```
+vagrant ssh
+```
+
+web:
+ - http://localhost:8081
+
+### Additional information
 
 Default credentials to webgui interface:
-
-```yaml
-Username: admin
-Password: centreon
 ```
+Username: admin
+Password: change123
+```
+
+You can change the parameters by editing the file `provision.sh` from the beginning.
 
 You need mapped a port to access the webgui, for this, add these line in `Vagrantfile`
-
-```ruby
-config.vm.network "forwarded_port", guest: 80, host: 8080
 ```
-
-reload config using command `vagrant reload` and access in your browser the address: `http://localhost:8080`
+config.vm.network "forwarded_port", guest: 80, host: 8081
+```
+reload config using command `vagrant reload` and access in your browser the address: http://localhost:8081
 
 If you want to add your ssh key in the box, add the following lines in the file `Vagrantfile`:
-
-```ruby
+```
 config.vm.provision "shell" do |s|
     ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
     s.inline = <<-SHELL
@@ -86,62 +80,3 @@ config.vm.provision "shell" do |s|
     SHELL
 end
 ```
-
-## Building your own Box
-
-### What will you need
-
-- Vagrant
-- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-- Git access to repository [centreon-ansible](https://github.com/centreon/centreon-ansible)
-
-Pull this repository:
-
-```bash
-git pull https://github.com/centreon/centreon-iac-vagrant
-cd centreon-iac-vagrant
-```
-
-For build, you will only need to run the box building automation script:
-
-```bash
-sh build-box.sh
-```
-
-A new file was created: `centreon.box`
-
-### Using your Box
-
-To use with Vagrant, add you box with command:
-
-```bash
-vagrant box add my-centreon centreon.box
-```
-
-Example:
-
-```bash
-$ vagrant box add my-centreon /home/lgcosta/devel/centreon/vagrant/centreon/centreon.box
-==> box: Box file was not detected as metadata. Adding it directly...
-==> box: Adding box 'my-centreon' (v0) for provider:
-    box: Unpacking necessary files from: file:///home/lgcosta/devel/centreon/vagrant/centreon/centreon.box
-==> box: Successfully added box 'my-centreon' (v0) for 'virtualbox'!
-$ vagrant box list
-my-centreon      (virtualbox, 0)
-```
-
-Done ! Now you can use the box with Vagrant, example:
-
-```bash
-vagrant init my-centreon
-```
-
-## Screencasts
-
-Usage:
-
-[![Centreon Vagrant Box](http://img.youtube.com/vi/73uXqcr4DX0/0.jpg)](http://www.youtube.com/watch?v=73uXqcr4DX0)
-
-Building own box:
-
-[![asciicast](https://asciinema.org/a/223018.svg)](https://asciinema.org/a/223018)
