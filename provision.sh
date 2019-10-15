@@ -49,10 +49,10 @@ function installPlugins() {
 
     # Install JQ tool (https://stedolan.github.io/jq/)
     # to help manage json output in shell
-    wget -O /usr/sbin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+    curl -o /usr/sbin/jq -q -L -g https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
     chmod +x /usr/sbin/jq
 
-    SLUGS=$(wget -O - -q 'https://api.imp.centreon.com/api/pluginpack/pluginpack?sort=catalog_level&by=asc&page[number]=1&page[size]=20')
+    SLUGS=$(curl -q -L -g 'https://api.imp.centreon.com/api/pluginpack/pluginpack?sort=catalog_level&by=asc&page[number]=1&page[size]=20')
 
     PLUGINS=(
       base-generic
@@ -75,7 +75,7 @@ function installPlugins() {
             )
             CURL_OUTPUT=$(${CURL_CMD} -X POST \
                 -H "Content-Type: application/json" \
-                -H "$(printf 'centreon-auth-token: %q' "$API_TOKEN")" \
+                -H "centreon-auth-token: $(read <<<"$API_TOKEN";echo "$REPLY")" \
                 -d "{\"pluginpack\":[${JSON_PLUGIN}]}" \
                 "${CENTREON_HOST}/centreon/api/index.php?object=centreon_pp_manager_pluginpack&action=installupdate"
             )
@@ -115,7 +115,7 @@ function installWidgets() {
         # Configure widget in Centreon
         ${CURL_CMD} -X POST \
             -H "Content-Type: application/json" \
-            -H "$(printf 'centreon-auth-token: %q' "$API_TOKEN")" \
+            -H "centreon-auth-token: $(read <<<"$API_TOKEN";echo "$REPLY")" \
             "${CENTREON_HOST}/centreon/api/index.php?object=centreon_module&action=install&id=${WIDGET}&type=widget"
     done
 }
@@ -157,9 +157,10 @@ timedatectl set-timezone Europe/Paris
 setenforce 0
 sed -i 's/enforcing/disabled/' /etc/selinux/config
 yum upgrade -y
-yum install -y centos-release-scl wget curl
+yum install -y centos-release-scl wget curl ntp
 yum install -y yum-utils http://yum.centreon.com/standard/19.10/el7/stable/noarch/RPMS/centreon-release-19.10-1.el7.centos.noarch.rpm
-yum-config-manager --enable 'centreon-testing*'
+#yum-config-manager --enable 'centreon-testing*'
+#yum-config-manager --enable 'centreon-canary*'
 #curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | bash
 #yum install -y centreon-base-config-centreon-engine
 yum install -y centreon
@@ -179,6 +180,7 @@ systemctl restart cbd
 systemctl enable httpd24-httpd
 systemctl enable snmpd
 systemctl enable snmptrapd
+systemctl enable ntpd
 systemctl enable rh-php72-php-fpm
 systemctl enable centcore
 systemctl enable centreontrapd
@@ -189,10 +191,13 @@ systemctl enable centreon
 systemctl restart rh-php72-php-fpm
 systemctl stop firewalld
 systemctl disable firewalld
+systemctl start ntpd
 systemctl start rh-php72-php-fpm
 systemctl start httpd24-httpd
 systemctl start mysqld
 systemctl start cbd
+systemctl start centcore
+systemctl start centreon
 systemctl start snmpd
 systemctl start snmptrapd
 

@@ -60,6 +60,10 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using for more
   # information on available options.
 
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+  end
+
   config.vm.provider :libvirt do |libvirt|
     libvirt.cpus = 1
     libvirt.memory = 1024
