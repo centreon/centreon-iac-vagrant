@@ -69,6 +69,18 @@ Vagrant.configure("2") do |config|
     libvirt.memory = 1024
   end
 
+  # More information: https://github.com/devopsgroup-io/vagrant-digitalocean
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+    override.nfs.functional = false
+    provider.token = "YOUR TOKEN"
+    provider.image = "centos-7-x64"
+    provider.region = "ams3"
+    provider.size = 's-2vcpu-2gb'
+  end
+
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
