@@ -155,7 +155,7 @@ function initialConfiguration() {
 
 timedatectl set-timezone Europe/Paris
 curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
-apt install -y ntp
+yum install -y ntp
 
 systemctl restart mysql
 mysqladmin -u root password $MYSQL_ROOT_PASSWORD # Set password to root mysql
