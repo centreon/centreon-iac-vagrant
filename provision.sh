@@ -154,19 +154,8 @@ function initialConfiguration() {
 }
 
 timedatectl set-timezone Europe/Paris
-setenforce 0
-sed -i 's/enforcing/disabled/' /etc/selinux/config
-yum upgrade -y
-yum install -y centos-release-scl wget curl ntp
-yum install -y yum-utils http://yum.centreon.com/standard/19.10/el7/stable/noarch/RPMS/centreon-release-19.10-1.el7.centos.noarch.rpm
-#yum-config-manager --enable 'centreon-testing*'
-#yum-config-manager --enable 'centreon-canary*'
-#curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | bash
-#yum install -y centreon-base-config-centreon-engine
-yum install -y centreon
+curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
 
-echo "date.timezone = Europe/Paris" > /etc/opt/rh/rh-php72/php.d/php-timezone.ini
-systemctl daemon-reload
 systemctl restart mysql
 mysqladmin -u root password $MYSQL_ROOT_PASSWORD # Set password to root mysql
 systemctl restart rh-php72-php-fpm
