@@ -13,14 +13,14 @@ function InstallDbCentreon() {
 
     CENTREON_HOST="http://localhost"
     COOKIE_FILE="/tmp/install.cookie"
-    CURL_CMD="curl -q -b ${COOKIE_FILE}"
+    CURL_CMD="curl -q -o /dev/null -b ${COOKIE_FILE}"
 
     curl -q -c ${COOKIE_FILE} ${CENTREON_HOST}/centreon/install/install.php
     ${CURL_CMD} "${CENTREON_HOST}/centreon/install/steps/step.php?action=stepContent"
     ${CURL_CMD} "${CENTREON_HOST}/centreon/install/steps/step.php?action=nextStep"
     ${CURL_CMD} "${CENTREON_HOST}/centreon/install/steps/step.php?action=nextStep"
     ${CURL_CMD} "${CENTREON_HOST}/centreon/install/steps/process/process_step3.php" \
-        --data "install_dir_engine=%2Fusr%2Fshare%2Fcentreon-engine&centreon_engine_stats_binary=%2Fusr%2Fsbin%2Fcentenginestats&monitoring_var_lib=%2Fvar%2Flib%2Fcentreon-engine&centreon_engine_connectors=%2Fusr%2Flib64%2Fcentreon-connector&centreon_engine_lib=%2Fusr%2Flib%2Fcentreon-engine&centreonplugins=%2Fusr%2Flib%2Fcentreon%2Fplugins%2F"
+        --data "install_dir_engine=%2Fusr%2Fshare%2Fcentreon-engine&centreon_engine_stats_binary=%2Fusr%2Fsbin%2Fcentenginestats&monitoring_var_lib=%2Fvar%2Flib%2Fcentreon-engine&centreon_engine_connectors=%2Fusr%2Flib64%2Fcentreon-connector&centreon_engine_lib=%2Fusr%2Flib64%2Fcentreon-engine&centreonplugins=%2Fusr%2Flib%2Fcentreon%2Fplugins%2F"
     ${CURL_CMD} "${CENTREON_HOST}/centreon/install/steps/step.php?action=nextStep"
     ${CURL_CMD} "${CENTREON_HOST}/centreon/install/steps/process/process_step4.php" \
         --data "centreonbroker_etc=%2Fetc%2Fcentreon-broker&centreonbroker_cbmod=%2Fusr%2Flib64%2Fnagios%2Fcbmod.so&centreonbroker_log=%2Fvar%2Flog%2Fcentreon-broker&centreonbroker_varlib=%2Fvar%2Flib%2Fcentreon-broker&centreonbroker_lib=%2Fusr%2Fshare%2Fcentreon%2Flib%2Fcentreon-broker"
@@ -172,7 +172,7 @@ systemctl enable snmpd
 systemctl enable snmptrapd
 systemctl enable ntpd
 systemctl enable rh-php72-php-fpm
-systemctl enable centcore
+systemctl enable gorgoned
 systemctl enable centreontrapd
 systemctl enable cbd
 systemctl enable centengine
@@ -186,7 +186,7 @@ systemctl start rh-php72-php-fpm
 systemctl start httpd24-httpd
 systemctl start mysqld
 systemctl start cbd
-systemctl start centcore
+systemctl start gorgoned
 systemctl start centreon
 systemctl start snmpd
 systemctl start snmptrapd
