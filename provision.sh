@@ -111,7 +111,7 @@ function installWidgets() {
 
     for WIDGET in "${WIDGETS[@]}"; do
         # Install package
-        yum install -y centreon-widget-${WIDGET}
+        dnf install -y centreon-widget-${WIDGET}
         # Configure widget in Centreon
         ${CURL_CMD} -X POST \
             -H "Content-Type: application/json" \
@@ -154,36 +154,36 @@ function initialConfiguration() {
 }
 
 timedatectl set-timezone Europe/Paris
-curl -L https://raw.githubusercontent.com/centreon/centreon/20.10.x/unattended.sh | sh
-yum install -y ntp
+curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
+dnf install -y ntp
 
 systemctl restart mariadb
 mysqladmin -u root password $MYSQL_ROOT_PASSWORD # Set password to root mysql
-systemctl restart rh-php72-php-fpm
-systemctl restart httpd24-httpd
+systemctl restart php-fpm
+systemctl restart httpd
 sleep 5 # waiting start httpd process
 InstallDbCentreon # Configure database
-su - centreon -c "/opt/rh/rh-php72/root/bin/php /usr/share/centreon/cron/centreon-partitioning.php"
+su - centreon -c "/bin/php /usr/share/centreon/cron/centreon-partitioning.php"
 systemctl restart cbd
 
 # Enable all others services
-systemctl enable httpd24-httpd
+systemctl enable httpd
 systemctl enable snmpd
 systemctl enable snmptrapd
 systemctl enable ntpd
-systemctl enable rh-php72-php-fpm
+systemctl enable php-fpm
 systemctl enable gorgoned
 systemctl enable centreontrapd
 systemctl enable cbd
 systemctl enable centengine
 systemctl enable centreon
 
-systemctl restart rh-php72-php-fpm
+systemctl restart php-fpm
 systemctl stop firewalld
 systemctl disable firewalld
 systemctl start ntpd
-systemctl start rh-php72-php-fpm
-systemctl start httpd24-httpd
+systemctl start php-fpm
+systemctl start httpd
 systemctl start mariadb
 systemctl start cbd
 systemctl start gorgoned

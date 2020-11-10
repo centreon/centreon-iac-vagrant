@@ -1,64 +1,70 @@
 # Centreon Vagrant
 
 This Vagrant configuration set will provide you with a ready-made environment for you to try Centreon version 20.10.
-The scripts contained here will install Centreon on an available CentOS 7 image and will prepare it all to preconfigure Centreon,
+The scripts contained here will install Centreon on an available CentOS 8 image and will prepare it all to preconfigure Centreon,
 making it ready for use with the access settings.
 
 Just get on (`vagrant up`) and use it in the web interface.
 
 [![asciicast](https://asciinema.org/a/264694.svg)](https://asciinema.org/a/264694)
 
-### What will you need
+## What will you need
 
 - Vagrant
 - VirtualBox or KVM/Qemu/Libvirt
 
-#### Vagrant
+### Vagrant
 
-  https://www.vagrantup.com/intro/index.html
+  <https://www.vagrantup.com/intro/index.html>
 
 #### Virtualbox
 
-  https://www.virtualbox.org/
+  <https://www.virtualbox.org/>
 
 #### KVM/Qemu - Libvirt
 
-  - https://www.qemu.org/
-  - https://help.ubuntu.com/community/Installation/QemuEmulator
-  - https://github.com/vagrant-libvirt/vagrant-libvirt
+- <https://www.qemu.org/>
+- <https://help.ubuntu.com/community/Installation/QemuEmulator>
+- <https://github.com/vagrant-libvirt/vagrant-libvirt>
 
 ### Usage
 
 Pull this repository:
-```
+
+```sh
 git pull https://github.com/centreon-lab/vagrant
 cd vagrant
 ```
 
 For up the image, you will only need to run the box building automation script:
-```
+
+```sh
 vagrant up
 ```
 
 If you want to use KVM/Qemu:
-```
+
+```sh
 vagrant up --provider=libvirt
 ```
 
 To access the environment:
 
 ssh:
-```
+
+```sh
 vagrant ssh
 ```
 
 web:
- - http://localhost:8081
+
+- <http://localhost:8081>
 
 ### Additional information
 
 Default credentials to webgui interface:
-```
+
+```sh
 Username: admin
 Password: change123
 ```
@@ -66,13 +72,16 @@ Password: change123
 You can change the parameters by editing the file `provision.sh` from the beginning.
 
 You need mapped a port to access the webgui, for this, add these line in `Vagrantfile`
-```
+
+```sh
 config.vm.network "forwarded_port", guest: 80, host: 8081
 ```
-reload config using command `vagrant reload` and access in your browser the address: http://localhost:8081
+
+reload config using command `vagrant reload` and access in your browser the address: <http://localhost:8081>
 
 If you want to add your ssh key in the box, add the following lines in the file `Vagrantfile`:
-```
+
+```sh
 config.vm.provision "shell" do |s|
     ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
     s.inline = <<-SHELL
