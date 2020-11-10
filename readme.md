@@ -1,6 +1,6 @@
 # Centreon Vagrant
 
-This Vagrant configuration set will provide you with a ready-made environment for you to try Centreon version 19.10.
+This Vagrant configuration set will provide you with a ready-made environment for you to try Centreon version 20.10.
 The scripts contained here will install Centreon on an available CentOS 7 image and will prepare it all to preconfigure Centreon,
 making it ready for use with the access settings.
 

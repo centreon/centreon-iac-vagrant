@@ -154,10 +154,10 @@ function initialConfiguration() {
 }
 
 timedatectl set-timezone Europe/Paris
-curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
+curl -L https://raw.githubusercontent.com/centreon/centreon/20.10.x/unattended.sh | sh
 yum install -y ntp
 
-systemctl restart mysql
+systemctl restart mariadb
 mysqladmin -u root password $MYSQL_ROOT_PASSWORD # Set password to root mysql
 systemctl restart rh-php72-php-fpm
 systemctl restart httpd24-httpd
@@ -184,7 +184,7 @@ systemctl disable firewalld
 systemctl start ntpd
 systemctl start rh-php72-php-fpm
 systemctl start httpd24-httpd
-systemctl start mysqld
+systemctl start mariadb
 systemctl start cbd
 systemctl start gorgoned
 systemctl start centreon
