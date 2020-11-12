@@ -154,8 +154,13 @@ function initialConfiguration() {
 }
 
 timedatectl set-timezone Europe/Paris
-curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
-dnf install -y ntp
+#curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
+yum install -y 'dnf-command(config-manager)'
+yum config-manager --set-enabled PowerTools
+dnf install -y http://yum.centreon.com/standard/20.10/el8/stable/noarch/RPMS/centreon-release-20.10-2.el8.noarch.rpm
+dnf install -y centreon
+echo "date.timezone = Europe/Paris" > /etc/php.d/40-timezone.ini
+#dnf install -y ntp
 
 systemctl restart mariadb
 mysqladmin -u root password $MYSQL_ROOT_PASSWORD # Set password to root mysql
