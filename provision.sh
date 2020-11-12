@@ -153,6 +153,8 @@ function initialConfiguration() {
     systemctl restart centengine
 }
 
+sed -i -e 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
 timedatectl set-timezone Europe/Paris
 #curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
 yum install -y 'dnf-command(config-manager)'
