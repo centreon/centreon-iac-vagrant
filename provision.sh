@@ -153,11 +153,15 @@ function initialConfiguration() {
     systemctl restart centengine
 }
 
+sed -i -e 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
 timedatectl set-timezone Europe/Paris
 #curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
-yum install -y 'dnf-command(config-manager)'
-yum config-manager --set-enabled PowerTools
-dnf install -y http://yum.centreon.com/standard/20.10/el8/stable/noarch/RPMS/centreon-release-20.10-2.el8.noarch.rpm
+dnf install -y 'dnf-command(config-manager)'
+dnf config-manager --set-enabled PowerTools
+dnf install -y http://yum.centreon.com/standard/21.04/el8/stable/noarch/RPMS/centreon-release-21.04-2.el8.noarch.rpm
+dnf config-manager --set-enabled centreon-unstable-noarch
+dnf config-manager --set-enabled centreon-unstable
 dnf install -y centreon
 echo "date.timezone = Europe/Paris" > /etc/php.d/40-timezone.ini
 #dnf install -y ntp
@@ -175,7 +179,7 @@ systemctl restart cbd
 systemctl enable httpd
 systemctl enable snmpd
 systemctl enable snmptrapd
-systemctl enable ntpd
+#systemctl enable ntpd
 systemctl enable php-fpm
 systemctl enable gorgoned
 systemctl enable centreontrapd
@@ -186,7 +190,7 @@ systemctl enable centreon
 systemctl restart php-fpm
 systemctl stop firewalld
 systemctl disable firewalld
-systemctl start ntpd
+#systemctl start ntpd
 systemctl start php-fpm
 systemctl start httpd
 systemctl start mariadb
