@@ -153,8 +153,18 @@ function initialConfiguration() {
     systemctl restart centengine
 }
 
-sed -i -e 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
-setenforce 0
+#sed -i -e 's/^SELINUX=.*$/SELINUX=disabled/' /etc/selinux/config
+#setenforce 0
+
+# Apply selinux rules
+dnf install -y \
+    https://gitlab.labexposed.com/centreon-lab/centreon-selinux/-/raw/centos8/centreon-common-selinux-0.0.3-1.x86_64.rpm \
+    https://gitlab.labexposed.com/centreon-lab/centreon-selinux/-/raw/centos8/centreon-web-selinux-0.0.6-1.x86_64.rpm \
+    https://gitlab.labexposed.com/centreon-lab/centreon-selinux/-/raw/centos8/centreon-broker-selinux-0.0.4-1.x86_64.rpm \
+    https://gitlab.labexposed.com/centreon-lab/centreon-selinux/-/raw/centos8/centreon-engine-selinux-0.0.7-1.x86_64.rpm \
+    https://gitlab.labexposed.com/centreon-lab/centreon-selinux/-/raw/centos8/centreon-gorgoned-selinux-0.0.1-1.x86_64.rpm \
+    https://gitlab.labexposed.com/centreon-lab/centreon-selinux/-/raw/centos8/centreon-plugins-selinux-0.0.4-1.x86_64.rpm
+
 timedatectl set-timezone Europe/Paris
 #curl -L https://raw.githubusercontent.com/centreon/centreon/master/unattended.sh | sh
 yum install -y 'dnf-command(config-manager)'
